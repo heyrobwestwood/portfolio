@@ -1,17 +1,122 @@
 ---
+import BaseLayout from '../layouts/BaseLayout.astro';
 
+// Placeholder entries — replace with real projects (or a content collection) later.
+const projects = [
+	{ title: 'Project One', category: 'Brand Identity', year: '2026' },
+	{ title: 'Project Two', category: 'Product Design', year: '2026' },
+	{ title: 'Project Three', category: 'Editorial', year: '2025' },
+	{ title: 'Project Four', category: 'Web Design', year: '2025' },
+	{ title: 'Project Five', category: 'Packaging', year: '2024' },
+	{ title: 'Project Six', category: 'Motion', year: '2024' },
+];
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout>
+	<section class="intro container" id="about">
+		<p class="eyebrow">Designer — Portfolio</p>
+		<h1>Designing clear, considered experiences for brands and products.</h1>
+		<p class="lede">
+			I'm Rob, a designer focused on identity, interfaces, and the systems that connect them.
+			This is a selection of recent work.
+		</p>
+		<p class="contact" id="contact">
+			<a href="mailto:hello@example.com">hello@example.com</a>
+		</p>
+	</section>
+
+	<section class="work container" id="work" aria-labelledby="work-heading">
+		<div class="section-head">
+			<h2 id="work-heading">Selected Work</h2>
+			<span class="eyebrow">{projects.length} projects</span>
+		</div>
+
+		<ul class="grid">
+			{projects.map((project) => (
+				<li class="card">
+					<div class="thumb" aria-hidden="true"></div>
+					<div class="meta">
+						<h3>{project.title}</h3>
+						<p>{project.category} · {project.year}</p>
+					</div>
+				</li>
+			))}
+		</ul>
+	</section>
+</BaseLayout>
+
+<style>
+	.intro {
+		padding-block: var(--space-section) var(--space-16);
+	}
+
+	.intro h1 {
+		max-width: 18ch;
+		margin-block: var(--space-4) var(--space-6);
+		font-size: var(--text-2xl);
+	}
+
+	.lede {
+		max-width: 52ch;
+		font-size: var(--text-lg);
+		line-height: var(--leading-snug);
+		color: var(--color-muted);
+	}
+
+	.contact {
+		margin-top: var(--space-8);
+	}
+
+	.work {
+		padding-bottom: var(--space-section);
+	}
+
+	.section-head {
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: var(--space-4);
+		padding-bottom: var(--space-4);
+		margin-bottom: var(--space-8);
+		border-bottom: 1px solid var(--color-border);
+	}
+
+	.section-head h2 {
+		font-size: var(--text-xl);
+	}
+
+	.grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr));
+		gap: var(--space-12) var(--space-8);
+		padding: 0;
+		list-style: none;
+	}
+
+	.thumb {
+		aspect-ratio: 4 / 3;
+		background: var(--color-surface);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius);
+		transition: transform var(--transition);
+	}
+
+	.card:hover .thumb {
+		transform: translateY(-2px);
+	}
+
+	.meta {
+		margin-top: var(--space-4);
+	}
+
+	.meta h3 {
+		font-size: var(--text-base);
+		letter-spacing: normal;
+	}
+
+	.meta p {
+		margin-top: var(--space-1);
+		font-size: var(--text-sm);
+		color: var(--color-muted);
+	}
+</style>
