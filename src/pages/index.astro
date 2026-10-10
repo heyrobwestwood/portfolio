@@ -4,7 +4,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 <BaseLayout>
 	<section class="intro container" id="about">
-		<h1><span class="line lead">Experience design architect, AI builder, and team leader. </span><span class="line soft">Transforming complex systems into intuitive, human-centered experiences. </span><span class="line soft last">Dedicated to building and mentoring high-velocity teams.</span></h1>
+		<h1><span class="line lead">Experience design architect, AI builder, and team leader. </span><span class="line soft">Transforming complex systems into intuitive, human-centered experiences. </span><span class="line soft last">Dedicated to scaling and mentoring high-velocity teams.</span></h1>
 		<p class="contact" id="contact">
 			<a class="email hover-sweep" href="mailto:heyrobwestwood@gmail.com">heyrobwestwood@gmail.com</a>
 			<button type="button" class="copy" data-email="heyrobwestwood@gmail.com" aria-label="Copy email address" title="Copy email address">
@@ -32,7 +32,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 	/* Each sentence's own text is painted from a two-tone gradient: amber on the left, its resting color on the right.
 	   Sliding the gradient recolors the existing text left to right on hover and back on mouse-off.
-	   The sweep is linear, and --sweep (set per sentence by the script below) scales its duration to the sentence length so every sentence moves at the same speed. */
+	   The sweep has a gentle ease-in-out, and --sweep (set per sentence by the script below) scales its duration to the sentence length so every sentence moves at the same speed. */
 	.line {
 		background-image: linear-gradient(to right, var(--color-key) 50%, var(--rest) 50%);
 		background-size: 200% 100%;
@@ -41,7 +41,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 		background-clip: text;
 		-webkit-text-fill-color: transparent;
 		color: transparent;
-		transition: background-position var(--sweep, 0.4s) linear, opacity 0.4s ease;
+		transition: background-position var(--sweep, 0.4s) cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
 	}
 
 	.line:hover {
