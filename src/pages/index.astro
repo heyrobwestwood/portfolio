@@ -31,7 +31,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 	}
 
 	/* Each sentence's own text is painted from a two-tone gradient: amber on the left, its resting color on the right.
-	   Sliding the gradient recolors the existing text left to right on hover and back on mouse-off */
+	   Sliding the gradient recolors the existing text left to right on hover and back on mouse-off.
+	   The sweep is linear, and --sweep (set per sentence by the script below) scales its duration to the sentence length so every sentence moves at the same speed. */
 	.line {
 		background-image: linear-gradient(to right, #e09f2f 50%, var(--rest) 50%);
 		background-size: 200% 100%;
@@ -40,7 +41,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 		background-clip: text;
 		-webkit-text-fill-color: transparent;
 		color: transparent;
-		transition: background-position 0.4s ease, opacity 0.4s ease;
+		transition: background-position var(--sweep, 0.4s) linear, opacity 0.4s ease;
 	}
 
 	.line:hover {
@@ -119,6 +120,22 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 </style>
 
 <script>
+	// Sweep at a constant speed: a sentence's duration is its total rendered width (all wrapped lines) divided by the speed
+	const SWEEP_SPEED = 2000; // px per second
+	const lines = document.querySelectorAll<HTMLElement>('.line');
+
+	function setSweepDurations() {
+		lines.forEach((line) => {
+			const width = [...line.getClientRects()].reduce((sum, rect) => sum + rect.width, 0);
+			line.style.setProperty('--sweep', `${(width / SWEEP_SPEED).toFixed(3)}s`);
+		});
+	}
+
+	setSweepDurations();
+	document.fonts.ready.then(setSweepDurations);
+	const headline = document.querySelector('h1');
+	if (headline) new ResizeObserver(setSweepDurations).observe(headline);
+
 	const button = document.querySelector<HTMLButtonElement>('.copy');
 
 	button?.addEventListener('click', async () => {
