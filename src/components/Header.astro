@@ -2,15 +2,13 @@
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 const links = [
-	{ label: 'Work', href: `${base}/#work` },
 	{ label: 'About', href: `${base}/#about` },
-	{ label: 'Contact', href: `${base}/#contact` },
 ];
 ---
 
 <header class="site-header">
 	<div class="container inner">
-		<a class="wordmark" href={`${base}/`}>Rob Westwood</a>
+		<a class="wordmark" href={`${base}/`}>Robert Westwood</a>
 		<nav aria-label="Primary">
 			<ul>
 				{links.map(({ label, href }) => (
@@ -41,8 +39,9 @@ const links = [
 	}
 
 	.wordmark {
-		font-weight: 600;
-		letter-spacing: var(--tracking-tight);
+		font-size: 1rem;
+		font-weight: 300;
+		letter-spacing: 0.02em;
 		text-decoration: none;
 	}
 
@@ -54,7 +53,9 @@ const links = [
 	}
 
 	nav a {
-		font-size: var(--text-sm);
+		font-size: 1rem;
+		font-weight: 300;
+		letter-spacing: normal;
 		color: var(--color-muted);
 		text-decoration: none;
 		transition: color var(--transition);

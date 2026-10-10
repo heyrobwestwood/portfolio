@@ -1,122 +1,129 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-
-// Placeholder entries — replace with real projects (or a content collection) later.
-const projects = [
-	{ title: 'Project One', category: 'Brand Identity', year: '2026' },
-	{ title: 'Project Two', category: 'Product Design', year: '2026' },
-	{ title: 'Project Three', category: 'Editorial', year: '2025' },
-	{ title: 'Project Four', category: 'Web Design', year: '2025' },
-	{ title: 'Project Five', category: 'Packaging', year: '2024' },
-	{ title: 'Project Six', category: 'Motion', year: '2024' },
-];
 ---
 
 <BaseLayout>
 	<section class="intro container" id="about">
-		<p class="eyebrow">Designer — Portfolio</p>
-		<h1>Designing clear, considered experiences for brands and products.</h1>
-		<p class="lede">
-			I'm Rob, a designer focused on identity, interfaces, and the systems that connect them.
-			This is a selection of recent work.
-		</p>
+		<h1><span class="line lead">Experience design architect, AI builder, and team leader. </span><span class="line soft">Transforming complex systems into intuitive, human-centered experiences. </span><span class="line soft last">Dedicated to building and mentoring high-velocity design teams.</span></h1>
 		<p class="contact" id="contact">
-			<a href="mailto:hello@example.com">hello@example.com</a>
+			<a class="email" href="mailto:heyrobwestwood@gmail.com">heyrobwestwood@gmail.com</a>
+			<button type="button" class="copy" data-email="heyrobwestwood@gmail.com" aria-label="Copy email address" title="Copy email address">
+				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+					<rect x="9" y="9" width="13" height="13" rx="2" />
+					<path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+				</svg>
+			</button>
 		</p>
-	</section>
-
-	<section class="work container" id="work" aria-labelledby="work-heading">
-		<div class="section-head">
-			<h2 id="work-heading">Selected Work</h2>
-			<span class="eyebrow">{projects.length} projects</span>
-		</div>
-
-		<ul class="grid">
-			{projects.map((project) => (
-				<li class="card">
-					<div class="thumb" aria-hidden="true"></div>
-					<div class="meta">
-						<h3>{project.title}</h3>
-						<p>{project.category} · {project.year}</p>
-					</div>
-				</li>
-			))}
-		</ul>
 	</section>
 </BaseLayout>
 
 <style>
 	.intro {
-		padding-block: var(--space-section) var(--space-16);
+		width: 75%;
+		padding-block: var(--space-section);
 	}
 
 	.intro h1 {
-		max-width: 18ch;
+		width: 90%;
+		max-width: none;
 		margin-block: var(--space-4) var(--space-6);
-		font-size: var(--text-2xl);
+		font-size: 3.5rem;
 	}
 
-	.lede {
-		max-width: 52ch;
-		font-size: var(--text-lg);
-		line-height: var(--leading-snug);
-		color: var(--color-muted);
+	/* Each sentence's own text is painted from a two-tone gradient: amber on the left, its resting color on the right.
+	   Sliding the gradient recolors the existing text left to right on hover and back on mouse-off */
+	.line {
+		background-image: linear-gradient(to right, #e09f2f 50%, var(--rest) 50%);
+		background-size: 200% 100%;
+		background-position: 100% 0;
+		-webkit-background-clip: text;
+		background-clip: text;
+		-webkit-text-fill-color: transparent;
+		color: transparent;
+		transition: background-position 0.4s ease, opacity 0.4s ease;
+	}
+
+	.line:hover {
+		background-position: 0 0;
+	}
+
+	/* Resting colors: the first sentence is full white, the others sit in a soft gray */
+	.lead {
+		--rest: var(--color-text);
+	}
+
+	.soft {
+		--rest: color-mix(in srgb, var(--color-text) 75%, var(--color-bg));
+	}
+
+	/* Final sentence rests at 65% opacity; hovering it brings it to full */
+	.last {
+		opacity: 0.65;
+	}
+
+	.last:hover {
+		opacity: 1;
+	}
+
+	/* While any sentence is hovered, dim the others */
+	.intro h1:has(.line:hover) .line:not(:hover) {
+		opacity: 0.25;
 	}
 
 	.contact {
 		margin-top: var(--space-8);
 	}
 
-	.work {
-		padding-bottom: var(--space-section);
-	}
-
-	.section-head {
-		display: flex;
-		align-items: baseline;
-		justify-content: space-between;
-		gap: var(--space-4);
-		padding-bottom: var(--space-4);
-		margin-bottom: var(--space-8);
-		border-bottom: 1px solid var(--color-border);
-	}
-
-	.section-head h2 {
-		font-size: var(--text-xl);
-	}
-
-	.grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr));
-		gap: var(--space-12) var(--space-8);
-		padding: 0;
-		list-style: none;
-	}
-
-	.thumb {
-		aspect-ratio: 4 / 3;
-		background: var(--color-surface);
-		border: 1px solid var(--color-border);
-		border-radius: var(--radius);
-		transition: transform var(--transition);
-	}
-
-	.card:hover .thumb {
-		transform: translateY(-2px);
-	}
-
-	.meta {
-		margin-top: var(--space-4);
-	}
-
-	.meta h3 {
-		font-size: var(--text-base);
+	.email {
+		font-size: 1rem;
+		font-weight: 300;
 		letter-spacing: normal;
+		color: var(--color-text);
+		text-decoration: none;
+		transition: color var(--transition);
 	}
 
-	.meta p {
-		margin-top: var(--space-1);
-		font-size: var(--text-sm);
+	.email:hover {
+		color: #e09f2f;
+	}
+
+	.copy {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		margin-left: var(--space-2);
+		padding: var(--space-1);
+		font-size: 1rem;
+		vertical-align: middle;
+		background: none;
+		border: 0;
+		border-radius: var(--radius);
 		color: var(--color-muted);
+		cursor: pointer;
+		transition: color var(--transition);
+	}
+
+	.copy svg {
+		width: 1em;
+		height: 1em;
+	}
+
+	.copy:hover,
+	.copy:focus-visible {
+		color: var(--color-text);
+	}
+
+	.copy.copied {
+		color: #e09f2f;
 	}
 </style>
+
+<script>
+	const button = document.querySelector<HTMLButtonElement>('.copy');
+
+	button?.addEventListener('click', async () => {
+		await navigator.clipboard.writeText(button.dataset.email ?? '');
+		button.classList.add('copied');
+		setTimeout(() => button.classList.remove('copied'), 1500);
+	});
+</script>
