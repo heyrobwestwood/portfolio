@@ -79,6 +79,8 @@
 	--color-muted: #6b6b6b;
 	--color-border: #e2e2e2;
 	--color-accent: #171717;
+	/* Key Colour: the orange used for hover and highlight states */
+	--color-key: #e09f2f;
 
 	--transition: 150ms ease;
 }
@@ -123,6 +125,15 @@ body {
 	line-height: var(--leading-normal);
 	-webkit-font-smoothing: antialiased;
 	text-rendering: optimizeLegibility;
+}
+
+/* Dark page background: #1a1a1a at the top fading to black, on a slight tilt.
+   Declared after the base body rule so it overrides its background. */
+@media (prefers-color-scheme: dark) {
+	body {
+		background: linear-gradient(172deg, #1a1a1a 0%, #0a0a0a 100%) no-repeat;
+		background-attachment: fixed;
+	}
 }
 
 img,
@@ -188,6 +199,46 @@ a {
 	clip: rect(0, 0, 0, 0);
 	white-space: nowrap;
 	border: 0;
+}
+
+/* Amber hover for links: the text is painted from a two-tone gradient (amber on the left, --rest on the right)
+   that slides across on hover, matching the headline sentences, while an underline grows in from the left. */
+.hover-sweep {
+	--rest: var(--color-text);
+	position: relative;
+	display: inline-block;
+	background-image: linear-gradient(to right, var(--color-key) 50%, var(--rest) 50%);
+	background-size: 200% 100%;
+	background-position: 100% 0;
+	-webkit-background-clip: text;
+	background-clip: text;
+	-webkit-text-fill-color: transparent;
+	color: transparent;
+	text-decoration: none;
+	transition: background-position 0.133s ease-out;
+}
+
+.hover-sweep::after {
+	content: '';
+	position: absolute;
+	left: 0;
+	bottom: 0.1em;
+	width: 100%;
+	height: 1px;
+	background: var(--color-key);
+	transform: scaleX(0);
+	transform-origin: left;
+	transition: transform 0.133s ease-out;
+}
+
+.hover-sweep:hover,
+.hover-sweep:focus-visible {
+	background-position: 0 0;
+}
+
+.hover-sweep:hover::after,
+.hover-sweep:focus-visible::after {
+	transform: scaleX(1);
 }
 
 .eyebrow {

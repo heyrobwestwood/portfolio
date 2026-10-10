@@ -8,11 +8,11 @@ const links = [
 
 <header class="site-header">
 	<div class="container inner">
-		<a class="wordmark" href={`${base}/`}>Robert Westwood</a>
+		<a class="wordmark hover-sweep" href={`${base}/`}>Robert Westwood</a>
 		<nav aria-label="Primary">
 			<ul>
 				{links.map(({ label, href }) => (
-					<li><a href={href}>{label}</a></li>
+					<li><a class="hover-sweep" href={href}>{label}</a></li>
 				))}
 			</ul>
 		</nav>
@@ -42,7 +42,6 @@ const links = [
 		font-size: 1rem;
 		font-weight: 300;
 		letter-spacing: 0.02em;
-		text-decoration: none;
 	}
 
 	ul {
@@ -56,12 +55,6 @@ const links = [
 		font-size: 1rem;
 		font-weight: 300;
 		letter-spacing: normal;
-		color: var(--color-muted);
-		text-decoration: none;
-		transition: color var(--transition);
-	}
-
-	nav a:hover {
-		color: var(--color-text);
+		--rest: var(--color-muted);
 	}
 </style>

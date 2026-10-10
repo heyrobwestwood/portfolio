@@ -6,7 +6,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 	<section class="intro container" id="about">
 		<h1><span class="line lead">Experience design architect, AI builder, and team leader. </span><span class="line soft">Transforming complex systems into intuitive, human-centered experiences. </span><span class="line soft last">Dedicated to building and mentoring high-velocity teams.</span></h1>
 		<p class="contact" id="contact">
-			<a class="email" href="mailto:heyrobwestwood@gmail.com">heyrobwestwood@gmail.com</a>
+			<a class="email hover-sweep" href="mailto:heyrobwestwood@gmail.com">heyrobwestwood@gmail.com</a>
 			<button type="button" class="copy" data-email="heyrobwestwood@gmail.com" aria-label="Copy email address" title="Copy email address">
 				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
 					<rect x="9" y="9" width="13" height="13" rx="2" />
@@ -34,7 +34,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 	   Sliding the gradient recolors the existing text left to right on hover and back on mouse-off.
 	   The sweep is linear, and --sweep (set per sentence by the script below) scales its duration to the sentence length so every sentence moves at the same speed. */
 	.line {
-		background-image: linear-gradient(to right, #e09f2f 50%, var(--rest) 50%);
+		background-image: linear-gradient(to right, var(--color-key) 50%, var(--rest) 50%);
 		background-size: 200% 100%;
 		background-position: 100% 0;
 		-webkit-background-clip: text;
@@ -79,13 +79,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 		font-size: 1rem;
 		font-weight: 300;
 		letter-spacing: normal;
-		color: var(--color-text);
-		text-decoration: none;
-		transition: color var(--transition);
-	}
-
-	.email:hover {
-		color: #e09f2f;
 	}
 
 	.copy {
@@ -111,11 +104,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 	.copy:hover,
 	.copy:focus-visible {
-		color: var(--color-text);
+		color: var(--color-key);
 	}
 
 	.copy.copied {
-		color: #e09f2f;
+		color: var(--color-key);
 	}
 </style>
 
