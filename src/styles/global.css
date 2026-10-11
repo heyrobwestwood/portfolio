@@ -127,12 +127,26 @@ body {
 	text-rendering: optimizeLegibility;
 }
 
-/* Dark page background: #1a1a1a at the top fading to black, on a slight tilt.
+/* Dark page background: #13212c at the top fading to #0d151a, on a slight tilt.
    Declared after the base body rule so it overrides its background. */
 @media (prefers-color-scheme: dark) {
 	body {
-		background: linear-gradient(172deg, #1a1a1a 0%, #0a0a0a 100%) no-repeat;
+		background: linear-gradient(172deg, #13212c 0%, #0d151a 100%) no-repeat;
 		background-attachment: fixed;
+	}
+
+	/* Subtle grid of 1px white dots every 24px, fixed to the viewport behind the content.
+	   The dot tile is an SVG so each dot stays a crisp single pixel. Dots are drawn at 25% opacity and the mask
+	   fades them to 40% of that (10%) at the bottom of the screen. */
+	body::before {
+		content: '';
+		position: fixed;
+		inset: 0;
+		z-index: -1;
+		pointer-events: none;
+		background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Crect width='1' height='1' fill='%23fff' fill-opacity='0.25'/%3E%3C/svg%3E");
+		-webkit-mask-image: linear-gradient(to bottom, #000, rgb(0 0 0 / 0.4));
+		mask-image: linear-gradient(to bottom, #000, rgb(0 0 0 / 0.4));
 	}
 }
 

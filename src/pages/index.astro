@@ -18,8 +18,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 </BaseLayout>
 
 <style>
+	/* Full container width so the headline and email share the header and footer's left edge;
+	   the line length is limited on the h1 instead of narrowing (and so re-centering) the container. */
 	.intro {
-		width: 75%;
 		padding-block: var(--space-section);
 	}
 
