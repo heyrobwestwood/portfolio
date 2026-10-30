@@ -1,0 +1,19 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PasswordGate from '../components/PasswordGate.astro';
+---
+
+<BaseLayout title="About — Robert Westwood">
+	<PasswordGate>
+		<section class="about container">
+			<h1>About</h1>
+			<p>Content coming soon.</p>
+		</section>
+	</PasswordGate>
+</BaseLayout>
+
+<style>
+	.about {
+		padding-block: var(--space-section);
+	}
+</style>
