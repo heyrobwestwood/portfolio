@@ -40,6 +40,50 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 	</body>
 </html>
 
+<script>
+	// Feeds the cursor position to the background dot glow (body::after in global.css), once per frame at most.
+	// Mouse only: touch has no hovering cursor to follow.
+	const root = document.documentElement;
+	let frame = 0;
+
+	window.addEventListener('pointermove', (e) => {
+		if (e.pointerType !== 'mouse') return;
+		cancelAnimationFrame(frame);
+		frame = requestAnimationFrame(() => {
+			root.style.setProperty('--pointer-x', `${e.clientX}px`);
+			root.style.setProperty('--pointer-y', `${e.clientY}px`);
+			root.style.setProperty('--pointer-glow', '1');
+		});
+	});
+
+	root.addEventListener('mouseleave', () => {
+		root.style.setProperty('--pointer-glow', '0');
+	});
+
+	// Shifts the dot grid so a row of dots sits on the page title's baseline (with the page scrolled to the top)
+	// and a column of dots lines up with the title's left edge.
+	// Must match the dot tile size in global.css.
+	const DOT_SPACING = 34;
+	const title = document.querySelector('.page-title');
+
+	function alignGridToTitle() {
+		if (!title) return;
+		// A zero-height inline-block's bottom edge sits on the text baseline
+		const marker = document.createElement('span');
+		marker.style.display = 'inline-block';
+		const baseline = title.appendChild(marker).getBoundingClientRect().bottom + window.scrollY;
+		marker.remove();
+		// The dot is the 1px row just above the baseline, so the text rests on it
+		const offset = (Math.round(baseline) - 1) % DOT_SPACING;
+		root.style.setProperty('--grid-offset-y', `${offset}px`);
+		const left = title.getBoundingClientRect().left;
+		root.style.setProperty('--grid-offset-x', `${Math.round(left) % DOT_SPACING}px`);
+	}
+
+	document.fonts.ready.then(alignGridToTitle);
+	window.addEventListener('resize', alignGridToTitle);
+</script>
+
 <style>
 	.skip-link {
 		position: absolute;

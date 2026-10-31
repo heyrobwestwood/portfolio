@@ -1,0 +1,30 @@
+---
+// Page title shared by every page, with its position locked: the space above it is 75% of the original section spacing,
+// and the page content starts 20px below it. Pages render it as the h1 unless they have their own (the index headline).
+interface Props {
+	as?: 'h1' | 'p';
+}
+
+const { as: Tag = 'h1' } = Astro.props;
+---
+
+<div class="page-title-wrap container">
+	<Tag class="page-title"><slot /></Tag>
+</div>
+
+<style>
+	.page-title-wrap {
+		padding-top: calc(var(--space-section) * 0.75);
+	}
+
+	/* Set like one more line of the index headline: same size, line height, and tracking */
+	.page-title {
+		margin-block: calc(var(--space-4) * 0.75) 1.25rem;
+		font-size: 3rem;
+		font-weight: 200;
+		line-height: var(--leading-tight);
+		letter-spacing: var(--tracking-tight);
+		/* Solid equivalent of 25% white over the dark background gradient where the title sits */
+		color: #4d575f;
+	}
+</style>

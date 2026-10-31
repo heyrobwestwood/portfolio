@@ -1,0 +1,20 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageTitle from '../components/PageTitle.astro';
+import PasswordGate from '../components/PasswordGate.astro';
+---
+
+<BaseLayout title="Work — Robert Westwood">
+	<PageTitle>Work</PageTitle>
+	<PasswordGate>
+		<section class="work container">
+			<p>Content coming soon.</p>
+		</section>
+	</PasswordGate>
+</BaseLayout>
+
+<style>
+	.work {
+		padding-bottom: var(--space-section);
+	}
+</style>

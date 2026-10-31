@@ -1,12 +1,13 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import PageTitle from '../components/PageTitle.astro';
 import PasswordGate from '../components/PasswordGate.astro';
 ---
 
 <BaseLayout title="About — Robert Westwood">
+	<PageTitle>About</PageTitle>
 	<PasswordGate>
 		<section class="about container">
-			<h1>About</h1>
 			<p>Content coming soon.</p>
 		</section>
 	</PasswordGate>
@@ -14,6 +15,6 @@ import PasswordGate from '../components/PasswordGate.astro';
 
 <style>
 	.about {
-		padding-block: var(--space-section);
+		padding-bottom: var(--space-section);
 	}
 </style>

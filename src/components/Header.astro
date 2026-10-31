@@ -2,17 +2,31 @@
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 const links = [
+	{ label: 'Approach', href: `${base}/approach/` },
+	{ label: 'Work', href: `${base}/work/` },
+	{ label: 'Teaching', href: `${base}/teaching/` },
+	{ label: 'Credentials', href: `${base}/credentials/` },
 	{ label: 'About', href: `${base}/about/` },
 ];
+
+// Normalized to a trailing slash so it matches the hrefs above whether or not the URL has one
+const currentPath = Astro.url.pathname.replace(/\/?$/, '/');
 ---
 
 <header class="site-header">
 	<div class="container inner">
 		<a class="wordmark hover-sweep" href={`${base}/`}>Robert Westwood</a>
+		<span class="divider" aria-hidden="true">|</span>
 		<nav aria-label="Primary">
 			<ul>
 				{links.map(({ label, href }) => (
-					<li><a class="hover-sweep" href={href}>{label}</a></li>
+					<li>
+						{currentPath === href ? (
+							<span class="current" aria-current="page">{label}</span>
+						) : (
+							<a class="hover-sweep" href={href}>{label}</a>
+						)}
+					</li>
 				))}
 			</ul>
 		</nav>
@@ -33,7 +47,6 @@ const links = [
 	.inner {
 		display: flex;
 		align-items: center;
-		justify-content: space-between;
 		gap: var(--space-6);
 		min-height: var(--space-16);
 	}
@@ -44,6 +57,11 @@ const links = [
 		letter-spacing: 0.02em;
 	}
 
+	.divider {
+		color: var(--color-muted);
+		font-weight: 300;
+	}
+
 	ul {
 		display: flex;
 		gap: var(--space-6);
@@ -51,10 +69,16 @@ const links = [
 		list-style: none;
 	}
 
-	nav a {
+	nav a,
+	.current {
 		font-size: 1rem;
 		font-weight: 300;
 		letter-spacing: normal;
 		--rest: var(--color-muted);
+	}
+
+	/* The current page's item is plain text, not a link, in the full text color */
+	.current {
+		color: var(--color-text);
 	}
 </style>
