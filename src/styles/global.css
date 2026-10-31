@@ -142,7 +142,7 @@ main {
 		background-attachment: fixed;
 	}
 
-	/* Subtle grid of 1px white dots every 34px, fixed to the viewport behind the content.
+	/* Subtle grid of 1px white dots every 20px, fixed to the viewport behind the content.
 	   The dot tile is an SVG so each dot stays a crisp single pixel. Dots are drawn at 25% opacity and the mask
 	   fades them to 40% of that (10%) at the bottom of the screen. */
 	body::before,
@@ -157,17 +157,18 @@ main {
 	}
 
 	body::before {
-		background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='34' height='34'%3E%3Crect width='1' height='1' fill='%23fff' fill-opacity='0.25'/%3E%3C/svg%3E");
+		background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20'%3E%3Crect width='1' height='1' fill='%23fff' fill-opacity='0.25'/%3E%3C/svg%3E");
 		-webkit-mask-image: linear-gradient(to bottom, #000, rgb(0 0 0 / 0.4));
 		mask-image: linear-gradient(to bottom, #000, rgb(0 0 0 / 0.4));
 	}
 
-	/* The same grid at 60% white, revealed only in a soft circle around the cursor, so dots shine brighter the closer they are.
+	/* The same grid in solid white, revealed only in a soft circle around the cursor, so dots shine brighter the closer they are.
+	   The mask is brightest right at the cursor, drops quickly within ~30px, then eases out gradually to nothing at 240px.
 	   --pointer-x / --pointer-y are set by the script in BaseLayout; the layer fades out when the cursor leaves the window. */
 	body::after {
-		background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='34' height='34'%3E%3Crect width='1' height='1' fill='%23fff' fill-opacity='0.6'/%3E%3C/svg%3E");
-		-webkit-mask-image: radial-gradient(circle 240px at var(--pointer-x, -999px) var(--pointer-y, -999px), #000 40%, transparent);
-		mask-image: radial-gradient(circle 240px at var(--pointer-x, -999px) var(--pointer-y, -999px), #000 40%, transparent);
+		background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20'%3E%3Crect width='1' height='1' fill='%23fff'/%3E%3C/svg%3E");
+		-webkit-mask-image: radial-gradient(circle 240px at var(--pointer-x, -999px) var(--pointer-y, -999px), #000, rgb(0 0 0 / 0.4) 12%, rgb(0 0 0 / 0.24) 20%, rgb(0 0 0 / 0.1) 50%, transparent);
+		mask-image: radial-gradient(circle 240px at var(--pointer-x, -999px) var(--pointer-y, -999px), #000, rgb(0 0 0 / 0.4) 12%, rgb(0 0 0 / 0.24) 20%, rgb(0 0 0 / 0.1) 50%, transparent);
 		opacity: var(--pointer-glow, 0);
 		transition: opacity 0.4s ease;
 	}
