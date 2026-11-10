@@ -5,10 +5,36 @@ import PasswordGate from '../components/PasswordGate.astro';
 ---
 
 <BaseLayout title="About — Robert Westwood">
-	<PageTitle>About</PageTitle>
+	<PageTitle>Tech, Motorcycle Nerd, Maker and Dad</PageTitle>
 	<PasswordGate>
 		<section class="about container">
-			<p>Content coming soon.</p>
+			<div class="intro">
+				<p class="copy">
+					This version of the site is here to give you a feel for who I am as a design
+					professional: hyper-collaborative, driven, and focused on what really matters to do great
+					work. In the spirit of continual iteration (and always shipping!), I'd love your feedback
+					on your experience here!
+				</p>
+				<p class="copy">
+					I believe great design improves not just the product, but the lives of the people who use
+					and build it. I strive to lead with empathy, lift others up, and be someone people
+					genuinely enjoy working with.
+				</p>
+				<p class="copy">
+					I'm based in Vancouver on the beautiful West Coast of Canada, originally from Ontario. I
+					studied in Toronto through the joint design program at York University and Sheridan
+					College, and I've been lucky to work with incredible teams and build lasting friendships
+					ever since.
+				</p>
+				<p class="copy">
+					Outside of work, I'm a motorcycle enthusiast, though these days I'm more often on four
+					wheels than two. Life with a young family is full of growth, curiosity, and a steady
+					supply of LEGO adventures.
+				</p>
+				<p class="copy">
+					Thank you for taking a look at my site.
+				</p>
+			</div>
 		</section>
 	</PasswordGate>
 </BaseLayout>
@@ -16,5 +42,18 @@ import PasswordGate from '../components/PasswordGate.astro';
 <style>
 	.about {
 		padding-bottom: var(--space-section);
+	}
+	/* Copy: body text style, matching the Approach page */
+	.copy {
+		font-size: 1.125rem;
+		font-weight: 300;
+		line-height: var(--leading-normal);
+	}
+	.intro {
+		max-width: 48rem;
+	}
+	/* One full blank line between paragraphs, like a hard return */
+	.intro .copy + .copy {
+		margin-top: 1lh;
 	}
 </style>

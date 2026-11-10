@@ -30,6 +30,7 @@ const currentPath = Astro.url.pathname.replace(/\/?$/, '/');
 				))}
 			</ul>
 		</nav>
+		{import.meta.env.DEV && <p class="gate-notice">🔒 Password gate bypassed (local dev mode)</p>}
 	</div>
 </header>
 
@@ -80,5 +81,22 @@ const currentPath = Astro.url.pathname.replace(/\/?$/, '/');
 	/* The current page's item is plain text, not a link, in the full text color */
 	.current {
 		color: var(--color-text);
+	}
+
+	/* Dev only: shown on pages that contain a PasswordGate, which renders the marker in dev mode */
+	.gate-notice {
+		display: none;
+		margin-left: auto;
+		padding: var(--space-1) var(--space-3);
+		font-family: var(--font-mono);
+		font-size: var(--text-xs);
+		color: var(--color-muted);
+		white-space: nowrap;
+		border: 1px dashed var(--color-border);
+		border-radius: var(--radius);
+	}
+
+	:global(body:has([data-password-gate])) .gate-notice {
+		display: block;
 	}
 </style>

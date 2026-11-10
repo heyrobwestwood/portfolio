@@ -5,10 +5,76 @@ import PasswordGate from '../components/PasswordGate.astro';
 ---
 
 <BaseLayout title="Approach — Robert Westwood">
-	<PageTitle>Approach</PageTitle>
+	<PageTitle>My Approach To Design</PageTitle>
 	<PasswordGate>
 		<section class="approach container">
-			<p>Content coming soon.</p>
+			<p class="copy intro">
+				I see design as a strategic process for solving complex problems and building positive
+				relationships between people and the products they use. It provides users with the
+				comprehension and control to meet their needs today, while keeping an eye on tomorrow.
+				The true value of design lives equally in the final product and the collaborative
+				journey to create it.
+			</p>
+			<div class="grid">
+				<div>
+					<h2>Design is a craft</h2>
+					<p class="copy">
+						Great design requires sweating the small stuff without losing sight of the big
+						picture. It is part detective work and part strategic thinking, placing user
+						insights at the center of the creative process to deliver experiences that truly
+						resonate.
+					</p>
+				</div>
+				<div>
+					<h2>It is an inclusive team sport</h2>
+					<p class="copy">
+						A collaborative process brings teams together around a shared understanding of
+						the problem space. Designers must act as orchestrators across Product,
+						Engineering, and Architecture disciplines. When everyone is empowered to
+						participate regardless of their role, it breaks down corporate silos, fuels
+						alignment, and drives teams to take shared ownership of the solution.
+					</p>
+				</div>
+				<div>
+					<h2>It is the connective tissue</h2>
+					<p class="copy">
+						Beyond crafting user experiences, applying design best practices improves how
+						teams collaborate. It helps them navigate changing requirements and the unknown
+						with agility and clarity, creating a cohesive environment across all
+						disciplines.
+					</p>
+				</div>
+				<div>
+					<h2>Design is accelerated by AI</h2>
+					<p class="copy">
+						The industry is moving faster than ever, and static deliverables are no longer
+						enough. By embracing artificial intelligence workflows and prototyping directly
+						in code, we can turn abstract concepts into tangible solutions rapidly.
+						Integrating these tools accelerates project timelines and keeps teams ahead of
+						the technology curve.
+					</p>
+				</div>
+				<div>
+					<h2>It's a strategic business driver</h2>
+					<p class="copy">
+						Transforming complex systems is the mechanism, but driving enterprise value is
+						the outcome. Design architecture must directly advance primary business goals
+						and market differentiation. Every design decision should be a calculated
+						investment that yields measurable returns and supports the broader product
+						strategy.
+					</p>
+				</div>
+				<div>
+					<h2>We must always revisit the why</h2>
+					<p class="copy">
+						User expectations and market demands constantly evolve, requiring us to
+						challenge assumptions and embrace change. Staying strictly aligned with
+						validated user problems keeps the work purposeful, but we must equally pressure
+						test our ideas against business goals. A successful solution must seamlessly
+						bridge the gap between what users need and what drives the business forward.
+					</p>
+				</div>
+			</div>
 		</section>
 	</PasswordGate>
 </BaseLayout>
@@ -16,5 +82,33 @@ import PasswordGate from '../components/PasswordGate.astro';
 <style>
 	.approach {
 		padding-bottom: var(--space-section);
+	}
+	/* Copy: body text style shared by the intro and the quadrant paragraphs */
+	.copy {
+		font-size: 1.125rem;
+		font-weight: 300;
+		line-height: var(--leading-normal);
+	}
+	.intro {
+		max-width: 48rem;
+		margin-bottom: var(--space-16);
+	}
+	.grid {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: var(--space-12) var(--gutter);
+	}
+	.grid h2 {
+		font-size: var(--text-xl);
+		line-height: var(--leading-snug);
+		margin-bottom: var(--space-4);
+	}
+	.grid .copy {
+		color: var(--color-muted);
+	}
+	@media (max-width: 40rem) {
+		.grid {
+			grid-template-columns: 1fr;
+		}
 	}
 </style>
