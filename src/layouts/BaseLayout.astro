@@ -13,6 +13,9 @@ const {
 } = Astro.props;
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+// Every page except the home page gets the line-by-line fade-in
+const isHome = Astro.url.pathname.replace(/\/$/, '') === base;
 ---
 
 <!doctype html>
@@ -25,6 +28,20 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 		<link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg`} />
 		<link rel="icon" href={`${base}/favicon.ico`} />
 		<title>{title}</title>
+		<!-- Sets the theme before the first paint: the visitor's saved choice from the header toggle,
+		     otherwise their system setting. The key must match THEME_KEY in Header.astro. -->
+		<script is:inline>
+			(() => {
+				let theme;
+				try {
+					theme = localStorage.getItem('theme');
+				} catch {}
+				if (theme !== 'light' && theme !== 'dark') {
+					theme = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+				}
+				document.documentElement.dataset.theme = theme;
+			})();
+		</script>
 	</head>
 	<body>
 		<a class="skip-link" href="#main">Skip to content</a>
@@ -32,6 +49,97 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 		<main id="main">
 			<slot />
 		</main>
+		{!isHome && (
+			/* Line-by-line fade-in. Inline and placed right after main so the text is hidden before the first paint.
+			   PasswordGate also calls revealLines() on the content it decrypts. Animation styles are in global.css. */
+			<script is:inline>
+				(() => {
+					const BLOCKS = 'h1, h2, h3, h4, h5, h6, p, li, figure, blockquote, form';
+					// Faded in as one piece rather than split into lines
+					const WHOLE = 'figure, form';
+					// Delay between lines and the length of each fade, in ms (keep DURATION in sync with global.css)
+					const STAGGER = 40;
+					const DURATION = 350;
+					const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+					// Outermost text blocks in root, skipping blocks nested in another (e.g. the paragraphs inside the password form)
+					const findBlocks = (root) =>
+						[...root.querySelectorAll(BLOCKS)].filter((el) => {
+							const outer = el.parentElement.closest(BLOCKS);
+							return !outer || !root.contains(outer);
+						});
+
+					// Wraps every word in a span so each one's line can be measured; whitespace stays as plain text so wrapping is unchanged
+					function wrapWords(block) {
+						const walker = document.createTreeWalker(block, NodeFilter.SHOW_TEXT);
+						const texts = [];
+						while (walker.nextNode()) texts.push(walker.currentNode);
+						const words = [];
+						for (const text of texts) {
+							if (!text.data.trim()) continue;
+							const fragment = document.createDocumentFragment();
+							for (const part of text.data.split(/(\s+)/)) {
+								if (!part) continue;
+								if (!part.trim()) {
+									fragment.append(part);
+									continue;
+								}
+								const word = document.createElement('span');
+								word.textContent = part;
+								fragment.append(word);
+								words.push(word);
+							}
+							text.replaceWith(fragment);
+						}
+						return words;
+					}
+
+					window.revealLines = (root) => {
+						if (reduceMotion) return;
+						const blocks = findBlocks(root);
+						const originals = new Map();
+						const pieces = [];
+						for (const block of blocks) {
+							if (block.matches(WHOLE)) {
+								pieces.push(block);
+								continue;
+							}
+							originals.set(block, [...block.childNodes].map((node) => node.cloneNode(true)));
+							pieces.push(...wrapWords(block));
+						}
+
+						// Number the lines by their position on screen, top to bottom, so lines side by side
+						// (like the two columns on Approach) fade in together
+						const measured = pieces
+							.map((el) => ({ el, top: el.getBoundingClientRect().top }))
+							.sort((a, b) => a.top - b.top);
+						let line = -1;
+						let lineTop = -Infinity;
+						for (const { el, top } of measured) {
+							if (top - lineTop > 4) {
+								line++;
+								lineTop = top;
+							}
+							el.style.animationDelay = `${line * STAGGER}ms`;
+							el.setAttribute('data-reveal-line', '');
+						}
+						for (const block of blocks) block.removeAttribute('data-reveal-pending');
+
+						// Once everything has faded in, put the original markup back so nothing is left over from the animation
+						setTimeout(() => {
+							for (const [block, nodes] of originals) block.replaceChildren(...nodes);
+							for (const { el } of measured) el.removeAttribute('data-reveal-line');
+						}, line * STAGGER + DURATION + 100);
+					};
+
+					if (reduceMotion) return;
+					const main = document.getElementById('main');
+					// Hide the text now, then split it once the web font has loaded, since the fallback font wraps lines differently
+					for (const block of findBlocks(main)) block.setAttribute('data-reveal-pending', '');
+					document.fonts.ready.then(() => window.revealLines(main));
+				})();
+			</script>
+		)}
 		<footer class="site-footer">
 			<div class="container">
 				<p>© {new Date().getFullYear()} Robert Westwood</p>
@@ -107,5 +215,11 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 		font-weight: 300;
 		color: color-mix(in srgb, var(--color-muted) 80%, #000);
 		opacity: 0.6;
+	}
+
+	/* Light mode: plain dark gray, since the dimming above is tuned for the dark background */
+	:global(:root[data-theme='light']) .site-footer {
+		color: var(--color-muted);
+		opacity: 1;
 	}
 </style>

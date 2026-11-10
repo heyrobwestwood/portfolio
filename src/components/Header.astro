@@ -30,9 +30,40 @@ const currentPath = Astro.url.pathname.replace(/\/?$/, '/');
 				))}
 			</ul>
 		</nav>
-		{import.meta.env.DEV && <p class="gate-notice">🔒 Password gate bypassed (local dev mode)</p>}
+		<div class="header-end">
+			{import.meta.env.DEV && <p class="gate-notice">🔒 Password gate bypassed (local dev mode)</p>}
+			{/* Light/dark toggle: shows a sun in dark mode (switch to light) and a moon in light mode (switch to dark) */}
+			<button type="button" class="theme-toggle" aria-label="Light mode" aria-pressed="false" title="Toggle light mode">
+				<svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+					<circle cx="12" cy="12" r="4" />
+					<path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
+				</svg>
+				<svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+					<path d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11Z" />
+				</svg>
+			</button>
+		</div>
 	</div>
 </header>
+
+<script>
+	// The key must match the theme script in BaseLayout.astro, which applies the saved theme before the first paint
+	const THEME_KEY = 'theme';
+	const root = document.documentElement;
+	const toggle = document.querySelector<HTMLButtonElement>('.theme-toggle');
+
+	const syncToggle = () => toggle?.setAttribute('aria-pressed', String(root.dataset.theme === 'light'));
+	syncToggle();
+
+	toggle?.addEventListener('click', () => {
+		const theme = root.dataset.theme === 'light' ? 'dark' : 'light';
+		root.dataset.theme = theme;
+		try {
+			localStorage.setItem(THEME_KEY, theme);
+		} catch {}
+		syncToggle();
+	});
+</script>
 
 <style>
 	.site-header {
@@ -83,10 +114,50 @@ const currentPath = Astro.url.pathname.replace(/\/?$/, '/');
 		color: var(--color-text);
 	}
 
+	/* Right-hand end of the header: the dev notice (when shown) and the theme toggle */
+	.header-end {
+		display: flex;
+		align-items: center;
+		gap: var(--space-4);
+		margin-left: auto;
+	}
+
+	.theme-toggle {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		padding: var(--space-1);
+		color: var(--color-muted);
+		background: none;
+		border: 0;
+		border-radius: var(--radius);
+		cursor: pointer;
+		transition: color var(--transition);
+	}
+
+	.theme-toggle:hover,
+	.theme-toggle:focus-visible {
+		color: var(--color-key);
+	}
+
+	.theme-toggle svg {
+		width: 1.25rem;
+		height: 1.25rem;
+	}
+
+	/* Show the icon for the mode you'd switch to */
+	.icon-moon,
+	:global(:root[data-theme='light']) .icon-sun {
+		display: none;
+	}
+
+	:global(:root[data-theme='light']) .icon-moon {
+		display: block;
+	}
+
 	/* Dev only: shown on pages that contain a PasswordGate, which renders the marker in dev mode */
 	.gate-notice {
 		display: none;
-		margin-left: auto;
 		padding: var(--space-1) var(--space-3);
 		font-family: var(--font-mono);
 		font-size: var(--text-xs);
