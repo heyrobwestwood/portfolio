@@ -1,0 +1,61 @@
+---
+// Email link with a copy-to-clipboard button. Used in the home page hero and the site footer.
+const EMAIL = 'heyrobwestwood@gmail.com';
+const { class: className } = Astro.props;
+---
+
+<span class:list={['email-copy', className]}>
+	<a class="email hover-sweep" href={`mailto:${EMAIL}`}>{EMAIL}</a>
+	<button type="button" class="copy" data-email={EMAIL} aria-label="Copy email address" title="Copy email address">
+		<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+			<rect x="9" y="9" width="13" height="13" rx="2" />
+			<path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+		</svg>
+	</button>
+</span>
+
+<style>
+	.email {
+		font-size: 1rem;
+		font-weight: 300;
+		letter-spacing: normal;
+	}
+
+	.copy {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		margin-left: var(--space-2);
+		padding: var(--space-1);
+		font-size: 1rem;
+		vertical-align: middle;
+		background: none;
+		border: 0;
+		border-radius: var(--radius);
+		color: var(--color-muted);
+		cursor: pointer;
+		transition: color var(--transition);
+	}
+
+	.copy svg {
+		width: 1em;
+		height: 1em;
+	}
+
+	.copy:hover,
+	.copy:focus-visible,
+	.copy.copied {
+		color: var(--color-primary);
+	}
+</style>
+
+<script>
+	// Astro bundles this once per page, so every copy button on the page is wired up here
+	document.querySelectorAll<HTMLButtonElement>('.email-copy .copy').forEach((button) => {
+		button.addEventListener('click', async () => {
+			await navigator.clipboard.writeText(button.dataset.email ?? '');
+			button.classList.add('copied');
+			setTimeout(() => button.classList.remove('copied'), 1500);
+		});
+	});
+</script>

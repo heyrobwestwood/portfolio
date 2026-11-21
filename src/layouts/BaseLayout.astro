@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import Header from '../components/Header.astro';
+import EmailCopy from '../components/EmailCopy.astro';
 
 interface Props {
 	title?: string;
@@ -141,56 +142,13 @@ const isHome = Astro.url.pathname.replace(/\/$/, '') === base;
 			</script>
 		)}
 		<footer class="site-footer">
-			<div class="container">
+			<div class="container footer-row">
 				<p>© {new Date().getFullYear()} Robert Westwood</p>
+				<EmailCopy />
 			</div>
 		</footer>
 	</body>
 </html>
-
-<script>
-	// Feeds the cursor position to the background dot glow (body::after in global.css), once per frame at most.
-	// Mouse only: touch has no hovering cursor to follow.
-	const root = document.documentElement;
-	let frame = 0;
-
-	window.addEventListener('pointermove', (e) => {
-		if (e.pointerType !== 'mouse') return;
-		cancelAnimationFrame(frame);
-		frame = requestAnimationFrame(() => {
-			root.style.setProperty('--pointer-x', `${e.clientX}px`);
-			root.style.setProperty('--pointer-y', `${e.clientY}px`);
-			root.style.setProperty('--pointer-glow', '1');
-		});
-	});
-
-	root.addEventListener('mouseleave', () => {
-		root.style.setProperty('--pointer-glow', '0');
-	});
-
-	// Shifts the dot grid so a row of dots sits on the page title's baseline (with the page scrolled to the top)
-	// and a column of dots lines up with the title's left edge.
-	// Must match the dot tile size in global.css.
-	const DOT_SPACING = 20;
-	const title = document.querySelector('.page-title');
-
-	function alignGridToTitle() {
-		if (!title) return;
-		// A zero-height inline-block's bottom edge sits on the text baseline
-		const marker = document.createElement('span');
-		marker.style.display = 'inline-block';
-		const baseline = title.appendChild(marker).getBoundingClientRect().bottom + window.scrollY;
-		marker.remove();
-		// The dot is the 1px row just above the baseline, so the text rests on it
-		const offset = (Math.round(baseline) - 1) % DOT_SPACING;
-		root.style.setProperty('--grid-offset-y', `${offset}px`);
-		const left = title.getBoundingClientRect().left;
-		root.style.setProperty('--grid-offset-x', `${Math.round(left) % DOT_SPACING}px`);
-	}
-
-	document.fonts.ready.then(alignGridToTitle);
-	window.addEventListener('resize', alignGridToTitle);
-</script>
 
 <style>
 	.skip-link {
@@ -213,13 +171,36 @@ const isHome = Astro.url.pathname.replace(/\/$/, '') === base;
 		padding-block: var(--space-12);
 		font-size: 1rem;
 		font-weight: 300;
-		color: color-mix(in srgb, var(--color-muted) 80%, #000);
+		--footer-color: color-mix(in srgb, var(--color-muted) 80%, #000);
+		color: var(--footer-color);
 		opacity: 0.6;
 	}
 
 	/* Light mode: plain dark gray, since the dimming above is tuned for the dark background */
 	:global(:root[data-theme='light']) .site-footer {
-		color: var(--color-muted);
+		--footer-color: var(--color-muted);
 		opacity: 1;
+	}
+
+	/* Copyright and email side by side, wrapping onto two lines on narrow screens */
+	.footer-row {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		column-gap: var(--space-6);
+		row-gap: var(--space-2);
+	}
+
+	.footer-row p {
+		margin: 0;
+	}
+
+	/* The email rests in the footer's own gray rather than full text color */
+	.site-footer :global(.email) {
+		--rest: var(--footer-color);
+	}
+
+	.site-footer :global(.copy:not(:hover, :focus-visible, .copied)) {
+		color: inherit;
 	}
 </style>

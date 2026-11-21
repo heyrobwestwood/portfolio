@@ -1,21 +1,213 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageTitle from '../components/PageTitle.astro';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <BaseLayout>
 	<PageTitle as="p">Robert Westwood</PageTitle>
 	<section class="intro container" id="about">
-		<h1><span class="line lead">Experience design architect, AI builder, and team leader. </span><span class="line soft">Transforming complex systems into intuitive, human-centered experiences. </span><span class="line soft last">Dedicated to scaling and mentoring high-velocity teams that drive real impact.</span></h1>
-		<p class="contact" id="contact">
-			<a class="email hover-sweep" href="mailto:heyrobwestwood@gmail.com">heyrobwestwood@gmail.com</a>
-			<button type="button" class="copy" data-email="heyrobwestwood@gmail.com" aria-label="Copy email address" title="Copy email address">
-				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-					<rect x="9" y="9" width="13" height="13" rx="2" />
-					<path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
-				</svg>
-			</button>
-		</p>
+		<h1><span class="line lead">Experience design architect, AI builder, and team leader. </span><span class="line soft">I transform complex systems into intuitive, human-centered experiences. </span><span class="line soft last">I'm dedicated to scaling and mentoring high-velocity teams that drive real impact.</span></h1>
+	</section>
+	<section class="snapshot container" aria-labelledby="passions-title">
+		<h2 id="passions-title">What I'm Most Passionate About</h2>
+		<ul class="snapshot-grid cols-3 linked-cards">
+			<li class="snapshot-card">
+				<a class="card-link" href={`${base}/approach/`}>
+					<div class="card-image" aria-hidden="true">
+						<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" /><circle cx="8.5" cy="8.5" r="1.5" /><path d="m21 15-5-5L5 21" /></svg>
+					</div>
+					<div class="card-body">
+						<p class="stat stat-title"><span class="sweep">Solving complexity through design craft</span></p>
+						<p class="sub-copy"><span class="link-sweep">My approach to design</span></p>
+					</div>
+				</a>
+			</li>
+			<li class="snapshot-card">
+				<a class="card-link" href={`${base}/work/`}>
+					<div class="card-image" aria-hidden="true">
+						<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" /><circle cx="8.5" cy="8.5" r="1.5" /><path d="m21 15-5-5L5 21" /></svg>
+					</div>
+					<div class="card-body">
+						<p class="stat stat-title"><span class="sweep">Building excellent products</span></p>
+						<p class="sub-copy"><span class="link-sweep">See my latest work</span></p>
+					</div>
+				</a>
+			</li>
+			<li class="snapshot-card">
+				<a class="card-link" href={`${base}/teaching/`}>
+					<div class="card-image" aria-hidden="true">
+						<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" /><circle cx="8.5" cy="8.5" r="1.5" /><path d="m21 15-5-5L5 21" /></svg>
+					</div>
+					<div class="card-body">
+						<p class="stat stat-title"><span class="sweep">Helping teams and individuals level-up</span></p>
+						<p class="sub-copy"><span class="link-sweep">Shaping design culture</span></p>
+					</div>
+				</a>
+			</li>
+		</ul>
+	</section>
+	<section class="snapshot container" aria-labelledby="expertise-title">
+		<h2 id="expertise-title">Design Expertise</h2>
+		<ul class="snapshot-grid cols-3 expertise">
+			<li class="snapshot-card">
+				<div class="flip" role="button" tabindex="0" aria-pressed="false">
+					<div class="flip-inner">
+						<div class="face front">
+							<p class="stat stat-title">Enterprise Systems &amp; Platform Architecture</p>
+							<p class="flip-hint sub-copy">Flip for more</p>
+						</div>
+						<div class="face back">
+							<p class="label">Moving beyond single-screen usability to design cohesive, multi-product ecosystems. Contemporary design leaders must untangle deep technical complexity, establish scalable governance, and architect foundational patterns that allow entire organizations to build consistently.</p>
+						</div>
+					</div>
+				</div>
+			</li>
+			<li class="snapshot-card">
+				<div class="flip" role="button" tabindex="0" aria-pressed="false">
+					<div class="flip-inner">
+						<div class="face front">
+							<p class="stat stat-title">AI-Native Workflows &amp; Code Prototyping</p>
+							<p class="flip-hint sub-copy">Flip for more</p>
+						</div>
+						<div class="face back">
+							<p class="label">Closing the gap between design intent and production reality. Modern leaders do not just oversee static design files; they leverage AI tools to prototype directly in code, validate technical constraints early, and fundamentally accelerate how their teams align and ship.</p>
+						</div>
+					</div>
+				</div>
+			</li>
+			<li class="snapshot-card">
+				<div class="flip" role="button" tabindex="0" aria-pressed="false">
+					<div class="flip-inner">
+						<div class="face front">
+							<p class="stat stat-title">Cross-Functional Orchestration &amp; Team Scaling</p>
+							<p class="flip-hint sub-copy">Flip for more</p>
+						</div>
+						<div class="face back">
+							<p class="label">Designing the operational environment as intentionally as the product itself. This requires aligning Product, Engineering, and Architecture triads to eliminate corporate silos, while simultaneously mentoring emerging talent and cultivating a high-velocity, resilient design culture.</p>
+						</div>
+					</div>
+				</div>
+			</li>
+			<li class="snapshot-card">
+				<div class="flip" role="button" tabindex="0" aria-pressed="false">
+					<div class="flip-inner">
+						<div class="face front">
+							<p class="stat stat-title">Commercial Strategy &amp; Value Realization</p>
+							<p class="flip-hint sub-copy">Flip for more</p>
+						</div>
+						<div class="face back">
+							<p class="label">Speaking the language of the executive suite. Design leadership today requires tying every architectural decision directly to market differentiation, product strategy, and measurable business ROI, rather than treating user empathy in isolation.</p>
+						</div>
+					</div>
+				</div>
+			</li>
+			<li class="snapshot-card">
+				<div class="flip" role="button" tabindex="0" aria-pressed="false">
+					<div class="flip-inner">
+						<div class="face front">
+							<p class="stat stat-title">Foundational Craft &amp; Design Rigor</p>
+							<p class="flip-hint sub-copy">Flip for more</p>
+						</div>
+						<div class="face back">
+							<p class="label">Setting an uncompromising bar for usability, accessibility, and visual clarity. Even as AI accelerates how quickly teams ship, contemporary leaders anchor their organizations in core human-centered principles, ensuring every interaction remains intuitive, intentional, and built to last.</p>
+						</div>
+					</div>
+				</div>
+			</li>
+			<li class="snapshot-card">
+				<div class="flip" role="button" tabindex="0" aria-pressed="false">
+					<div class="flip-inner">
+						<div class="face front">
+							<p class="stat stat-title">Rapid Research &amp; Continuous Validation</p>
+							<p class="flip-hint sub-copy">Flip for more</p>
+						</div>
+						<div class="face back">
+							<p class="label">Replacing slow, siloed research cycles with high-velocity discovery. By embedding lightweight testing and continuous user feedback directly into the build process, leaders pressure-test assumptions early, de-risk product bets, and keep teams tightly aligned with validated human needs.</p>
+						</div>
+					</div>
+				</div>
+			</li>
+		</ul>
+	</section>
+	<section class="snapshot container" aria-labelledby="snapshot-title">
+		<h2 id="snapshot-title">Leadership &amp; Impact Snapshot</h2>
+		<ul class="snapshot-grid linked-cards">
+			<li class="snapshot-card">
+				<a class="card-link" href={`${base}/work/`}>
+					<div class="card-body">
+						<p class="stat"><span class="sweep">$93M</span></p>
+						<p class="label">Revenue lift from rapidly scaling Best Buy's pickup experience during COVID-19.</p>
+						<p class="cta sub-copy"><span class="link-sweep">See case study</span></p>
+					</div>
+				</a>
+			</li>
+			<li class="snapshot-card">
+				<a class="card-link" href={`${base}/work/`}>
+					<div class="card-body">
+						<p class="stat"><span class="sweep">+100K</span></p>
+						<p class="label">New creators onboarded through a cloud-connected overhaul of the Unity Hub platform.</p>
+						<p class="cta sub-copy"><span class="link-sweep">See case study</span></p>
+					</div>
+				</a>
+			</li>
+			<li class="snapshot-card">
+				<a class="card-link" href={`${base}/work/`}>
+					<div class="card-body">
+						<p class="stat"><span class="sweep">+52%</span></p>
+						<p class="label">Customer conversion lift from connecting online shoppers directly with in-store product experts.</p>
+						<p class="cta sub-copy"><span class="link-sweep">See case study</span></p>
+					</div>
+				</a>
+			</li>
+			<li class="snapshot-card">
+				<a class="card-link" href={`${base}/work/`}>
+					<div class="card-body">
+						<p class="stat"><span class="sweep">+270%</span></p>
+						<p class="label">Surge in review platform engagement after rebuilding BestBuy.ca's customer-voice ecosystem.</p>
+						<p class="cta sub-copy"><span class="link-sweep">See case study</span></p>
+					</div>
+				</a>
+			</li>
+		</ul>
+	</section>
+	<section class="snapshot container" aria-labelledby="kind-words-title">
+		<h2 id="kind-words-title">Some great people with kind words</h2>
+		<ul class="snapshot-grid cols-3">
+			<li class="snapshot-card">
+				<figure class="quote">
+					<blockquote>
+						<p>Rob unites teams, drives action, and truly listens. He bridges silos, communicates with clarity, purpose and earns trust at every level. Resilient and adaptable, he delivers while others deliberate. We survived the largest tech firms together—he never breaks, only bends and leads.</p>
+					</blockquote>
+					<figcaption class="sub-copy">
+						<span class="name">Shawn Mcclelland</span>
+						<span class="role">Head of Design Platform @ Intuit</span>
+					</figcaption>
+				</figure>
+			</li>
+			<li class="snapshot-card">
+				<figure class="quote">
+					<blockquote>
+						<p>As a design leader, Rob has an impressive ability to bring people into the design process through transparency and inspiration. He operates with a philosophy that the more people understand the design process and principles, the better the team's output and the results they achieve.</p>
+					</blockquote>
+					<figcaption class="sub-copy">
+						<span class="name">Mark Raham</span>
+						<span class="role">Executive Producer @ Kabam</span>
+					</figcaption>
+				</figure>
+			</li>
+			<li class="snapshot-card">
+				<figure class="quote">
+					<blockquote>
+						<p>Rob continuously impresses with his drive to pull multiple disciplines together, understand their needs, and reflect those in his solutions. He is a strong communicator—across, up, and down—and leans on his strong empathy for both end-users and stakeholders that guides his process.</p>
+					</blockquote>
+					<figcaption class="sub-copy">
+						<span class="name">Jose Zamudio-Meyer</span>
+						<span class="role">Creative Director @ Discord</span>
+					</figcaption>
+				</figure>
+			</li>
+		</ul>
 	</section>
 </BaseLayout>
 
@@ -37,7 +229,7 @@ import PageTitle from '../components/PageTitle.astro';
 	   Sliding the gradient recolors the existing text left to right on hover and back on mouse-off.
 	   The sweep has a gentle ease-in-out, and --sweep (set per sentence by the script below) scales its duration to the sentence length so every sentence moves at the same speed. */
 	.line {
-		background-image: linear-gradient(to right, var(--color-key) 50%, var(--rest) 50%);
+		background-image: linear-gradient(to right, var(--color-primary) 50%, var(--rest) 50%);
 		background-size: 200% 100%;
 		background-position: 100% 0;
 		-webkit-background-clip: text;
@@ -74,44 +266,322 @@ import PageTitle from '../components/PageTitle.astro';
 		opacity: 0.25;
 	}
 
-	.contact {
-		margin-top: var(--space-8);
+	.snapshot {
+		padding-bottom: var(--space-section);
 	}
 
-	.email {
-		font-size: 1rem;
-		font-weight: 300;
-		letter-spacing: normal;
+	.snapshot h2 {
+		margin-block: 0 var(--space-6);
+		font-size: var(--text-heading);
 	}
 
-	.copy {
-		display: inline-flex;
+	.snapshot-grid {
+		display: grid;
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+		gap: var(--space-4);
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.snapshot-grid.cols-3 {
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+	}
+
+	.snapshot-card {
+		padding: var(--space-6);
+		background: var(--color-surface);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius);
+	}
+
+	/* Linked cards (the passion cards and the Leadership & Impact cards) link to other pages. On hover or keyboard focus the card floats up
+	   and glows softly, its large text sweeps to amber, and its link text gets the header-link treatment. */
+	.linked-cards .snapshot-card {
+		padding: 0;
+		transition: transform 0.2s ease-out, box-shadow 0.2s ease-out, border-color 0.2s ease-out;
+	}
+
+	/* The link fills the whole card so the entire card is clickable; the image runs edge to edge and the text sits in .card-body */
+	.linked-cards .card-link {
+		display: flex;
+		flex-direction: column;
+		height: 100%;
+		border-radius: inherit;
+		color: inherit;
+		text-decoration: none;
+	}
+
+	/* Fills the card below the image so a link at the bottom lines up across a row */
+	.linked-cards .card-body {
+		display: flex;
+		flex: 1;
+		flex-direction: column;
+		padding: 0 var(--space-6) var(--space-6);
+	}
+
+	/* Cards without an image start with the same padding on top as on the sides */
+	.linked-cards .card-body:first-child {
+		padding-top: var(--space-6);
+	}
+
+	/* "See case study": the header-link effect, pinned to the bottom left of the card. Type styling comes from .sub-copy. */
+	.linked-cards .cta {
+		margin: auto 0 0;
+		padding-top: var(--space-4);
+	}
+
+	/* Edge to edge at the top of the card, with its top corners following the card's rounded corners (radius minus the 1px border) */
+	.linked-cards .card-image {
+		flex: none;
+		border-radius: calc(var(--radius) - 1px) calc(var(--radius) - 1px) 0 0;
+	}
+
+	.linked-cards .snapshot-card:is(:hover, :focus-within) {
+		transform: translateY(-8px);
+		border-color: color-mix(in srgb, var(--color-secondary) 40%, var(--color-border));
+		box-shadow: 0 0 24px color-mix(in srgb, var(--color-secondary) 18%, transparent);
+	}
+
+	/* Card title: the same two-tone gradient sweep as the headline sentences. The text is painted amber on the left and white on the right,
+	   and hovering the card slides the gradient so the text turns amber left to right (and back on mouse-off). */
+	.linked-cards .sweep {
+		background-image: linear-gradient(to right, var(--color-primary) 50%, var(--color-text) 50%);
+		background-size: 200% 100%;
+		background-position: 100% 0;
+		-webkit-background-clip: text;
+		background-clip: text;
+		-webkit-text-fill-color: transparent;
+		color: transparent;
+		transition: background-position 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+	}
+
+	.linked-cards .snapshot-card:is(:hover, :focus-within) .sweep {
+		background-position: 0 0;
+	}
+
+	/* Card subtext: the same effect as the header links (.hover-sweep in global.css), triggered by hovering the card.
+	   The text sweeps to amber while an amber underline grows in from the left. */
+	.linked-cards .link-sweep {
+		--rest: var(--color-muted);
+		position: relative;
+		display: inline-block;
+		background-image: linear-gradient(to right, var(--color-primary) 50%, var(--rest) 50%);
+		background-size: 200% 100%;
+		background-position: 100% 0;
+		-webkit-background-clip: text;
+		background-clip: text;
+		-webkit-text-fill-color: transparent;
+		color: transparent;
+		transition: background-position 0.133s ease-out;
+	}
+
+	.linked-cards .link-sweep::after {
+		content: '';
+		position: absolute;
+		left: 0;
+		bottom: 0.1em;
+		width: 100%;
+		height: 1px;
+		background: var(--color-primary);
+		transform: scaleX(0);
+		transform-origin: left;
+		transition: transform 0.133s ease-out;
+	}
+
+	.linked-cards .snapshot-card:is(:hover, :focus-within) .link-sweep {
+		background-position: 0 0;
+	}
+
+	.linked-cards .snapshot-card:is(:hover, :focus-within) .link-sweep::after {
+		transform: scaleX(1);
+	}
+
+	.snapshot-card .stat {
+		margin: 0 0 var(--space-2);
+		font-size: var(--text-2xl);
+		line-height: var(--leading-tight);
+		color: var(--color-text);
+	}
+
+	/* Image slot at the top of a card. Shows a neutral placeholder; swap the div for an <img class="card-image"> and it fills the same box. */
+	.card-image {
+		display: flex;
 		align-items: center;
 		justify-content: center;
-		margin-left: var(--space-2);
-		padding: var(--space-1);
-		font-size: 1rem;
-		vertical-align: middle;
+		width: 100%;
+		aspect-ratio: 16 / 10;
+		margin-bottom: var(--space-6);
+		object-fit: cover;
+		background: color-mix(in srgb, var(--color-text) 8%, var(--color-surface));
+		border-radius: calc(var(--radius) - 2px);
+		color: var(--color-muted);
+	}
+
+	.card-image svg {
+		width: 2.5rem;
+		height: 2.5rem;
+		opacity: 0.6;
+	}
+
+	/* Words instead of a number: a smaller, snugger size so a phrase fits a card without towering over the text below */
+	.snapshot-card .stat-title {
+		font-size: var(--text-xl);
+		line-height: var(--leading-snug);
+		letter-spacing: var(--tracking-tight);
+		text-wrap: balance;
+	}
+
+	.snapshot-card .label {
+		margin: 0;
+		font-size: var(--text-sm);
+		line-height: var(--leading-snug);
+		color: var(--color-muted);
+	}
+
+	/* Testimonials: an amber opening quote mark, the quote, then the credit pinned to the bottom of the card
+	   so the three credits line up even when the quotes differ in length */
+	.quote {
+		display: flex;
+		flex-direction: column;
+		height: 100%;
+		margin: 0;
+	}
+
+	.quote blockquote {
+		flex: 1;
+		margin: 0 0 var(--space-6);
+	}
+
+	/* Copy: the site's body text style, matching the About and Approach pages */
+	.quote blockquote p {
+		margin: 0;
+		font-size: 1.125rem;
+		font-weight: 300;
+		line-height: var(--leading-normal);
+		color: var(--color-text);
+	}
+
+	/* Amber opening and closing quote marks inline with the text, enlarged but with no line height so they don't push their lines apart */
+	.quote blockquote p::before,
+	.quote blockquote p::after {
+		font-size: 2em;
+		line-height: 0;
+		vertical-align: -0.4em;
+		color: var(--color-primary);
+	}
+
+	.quote blockquote p::before {
+		content: '\201C';
+		margin-right: 0.1em;
+	}
+
+	.quote blockquote p::after {
+		content: '\201D';
+		margin-left: 0.1em;
+	}
+
+	/* Credit under a quote: type styling comes from .sub-copy */
+	.quote figcaption {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-1);
+		padding-top: var(--space-4);
+		border-top: 1px solid var(--color-border);
+	}
+
+	/* Design Expertise: flip cards. The big title is on the front and the description on the back.
+	   Both faces share one grid cell, so every card is as tall as its longer face and the rows stay even.
+	   The card chrome (background, border, radius) moves from the li onto the faces so it flips with them.
+	   .flip stays still and takes the clicks and hover; only .flip-inner rotates. If the clickable element itself rotated,
+	   its hit area would shrink to a sliver mid-turn, so clicks would miss and the hover glow would flicker. */
+	.expertise .snapshot-card {
+		padding: 0;
 		background: none;
 		border: 0;
+	}
+
+	.expertise .flip {
+		display: grid;
+		height: 100%;
 		border-radius: var(--radius);
-		color: var(--color-muted);
+		perspective: 1200px;
 		cursor: pointer;
-		transition: color var(--transition);
+		/* A quick double-click shouldn't select the text, and a tap shouldn't flash the browser's highlight */
+		user-select: none;
+		-webkit-user-select: none;
+		-webkit-tap-highlight-color: transparent;
 	}
 
-	.copy svg {
-		width: 1em;
-		height: 1em;
+	.expertise .flip-inner {
+		display: grid;
+		transform-style: preserve-3d;
+		transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+		will-change: transform;
 	}
 
-	.copy:hover,
-	.copy:focus-visible {
-		color: var(--color-key);
+	.expertise .flip.is-flipped .flip-inner {
+		transform: rotateY(180deg);
 	}
 
-	.copy.copied {
-		color: var(--color-key);
+	.expertise .face {
+		grid-area: 1 / 1;
+		padding: var(--space-6);
+		background: var(--color-surface);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius);
+		-webkit-backface-visibility: hidden;
+		backface-visibility: hidden;
+		transition: box-shadow 0.2s ease-out, border-color 0.2s ease-out;
+	}
+
+	.expertise .back {
+		transform: rotateY(180deg);
+	}
+
+	/* Same soft purple glow as the passion cards, so the cards read as interactive */
+	.expertise .flip:is(:hover, :focus-visible) .face {
+		border-color: color-mix(in srgb, var(--color-secondary) 40%, var(--color-border));
+		box-shadow: 0 0 24px color-mix(in srgb, var(--color-secondary) 18%, transparent);
+	}
+
+	.expertise .stat {
+		margin: 0;
+	}
+
+	/* The front face is a column so the hint can sit at the bottom left, however tall the card is */
+	.expertise .front {
+		display: flex;
+		flex-direction: column;
+	}
+
+	/* Hint pinned to the bottom left of the card; the top padding keeps it clear of the title on short cards.
+	   Type styling comes from .sub-copy. */
+	.expertise .flip-hint {
+		margin: auto 0 0;
+		padding-top: var(--space-6);
+	}
+
+	@media (max-width: 60rem) {
+		.snapshot-grid {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+	}
+
+	/* Design Expertise holds long text, so its three-up grid drops to two across on tablets */
+	@media (max-width: 60rem) {
+		.snapshot-grid.cols-3.expertise {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+	}
+
+	/* The three-up row stays three across on tablets, then stacks with the rest on phones */
+	@media (max-width: 30rem) {
+		.snapshot-grid,
+		.snapshot-grid.cols-3,
+		.snapshot-grid.cols-3.expertise {
+			grid-template-columns: 1fr;
+		}
 	}
 </style>
 
@@ -129,14 +599,22 @@ import PageTitle from '../components/PageTitle.astro';
 
 	setSweepDurations();
 	document.fonts.ready.then(setSweepDurations);
+	// Flip cards: click, tap, Enter or Space turns the card over
+	document.querySelectorAll<HTMLElement>('.flip').forEach((card) => {
+		const toggle = () => {
+			const flipped = card.classList.toggle('is-flipped');
+			card.setAttribute('aria-pressed', String(flipped));
+		};
+		card.addEventListener('click', toggle);
+		card.addEventListener('keydown', (e) => {
+			if (e.key === 'Enter' || e.key === ' ') {
+				e.preventDefault();
+				// Holding the key down repeats keydown; only the first press should flip the card
+				if (!e.repeat) toggle();
+			}
+		});
+	});
+
 	const headline = document.querySelector('h1');
 	if (headline) new ResizeObserver(setSweepDurations).observe(headline);
-
-	const button = document.querySelector<HTMLButtonElement>('.copy');
-
-	button?.addEventListener('click', async () => {
-		await navigator.clipboard.writeText(button.dataset.email ?? '');
-		button.classList.add('copied');
-		setTimeout(() => button.classList.remove('copied'), 1500);
-	});
 </script>
