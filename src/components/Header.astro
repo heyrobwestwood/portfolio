@@ -5,7 +5,7 @@ const links = [
 	{ label: 'Approach', href: `${base}/approach/` },
 	{ label: 'Work', href: `${base}/work/` },
 	{ label: 'Teaching', href: `${base}/teaching/` },
-	{ label: 'Credentials', href: `${base}/credentials/` },
+	{ label: 'Experience', href: `${base}/credentials/` },
 	{ label: 'About', href: `${base}/about/` },
 ];
 
@@ -73,7 +73,6 @@ const currentPath = Astro.url.pathname.replace(/\/?$/, '/');
 		background: color-mix(in srgb, var(--color-bg) 85%, transparent);
 		backdrop-filter: blur(12px);
 		-webkit-backdrop-filter: blur(12px);
-		border-bottom: 1px solid var(--color-border);
 	}
 
 	.inner {

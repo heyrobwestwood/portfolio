@@ -1,13 +1,12 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import PageTitle from '../components/PageTitle.astro';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <BaseLayout>
-	<PageTitle as="p">Robert Westwood</PageTitle>
 	<section class="intro container" id="about">
-		<h1><span class="line lead">Experience design architect, AI builder, and team leader. </span><span class="line soft">I transform complex systems into intuitive, human-centered experiences. </span><span class="line soft last">I'm dedicated to scaling and mentoring high-velocity teams that drive real impact.</span></h1>
+		<p class="tagline">Design for impact</p>
+		<h1><span class="line">I am an Experience Design Architect, AI builder, and team leader. </span><span class="line">I transform complex systems into intuitive, human-centered experiences. </span><span class="line">My focus is to scale and mentor high-velocity teams that ship the right work.</span></h1>
 	</section>
 	<section class="snapshot container" aria-labelledby="passions-title">
 		<h2 id="passions-title">What I'm Most Passionate About</h2>
@@ -54,6 +53,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 				<div class="flip" role="button" tabindex="0" aria-pressed="false">
 					<div class="flip-inner">
 						<div class="face front">
+							<span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3 9 5-9 5-9-5 9-5Z" /><path d="m3 13 9 5 9-5" /></svg></span>
 							<p class="stat stat-title">Enterprise Systems &amp; Platform Architecture</p>
 							<p class="flip-hint sub-copy">Flip for more</p>
 						</div>
@@ -67,6 +67,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 				<div class="flip" role="button" tabindex="0" aria-pressed="false">
 					<div class="flip-inner">
 						<div class="face front">
+							<span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m8 7-5 5 5 5" /><path d="m16 7 5 5-5 5" /><path d="m14 4-4 16" /></svg></span>
 							<p class="stat stat-title">AI-Native Workflows &amp; Code Prototyping</p>
 							<p class="flip-hint sub-copy">Flip for more</p>
 						</div>
@@ -80,6 +81,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 				<div class="flip" role="button" tabindex="0" aria-pressed="false">
 					<div class="flip-inner">
 						<div class="face front">
+							<span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="2" /><circle cx="5" cy="19" r="2" /><circle cx="19" cy="19" r="2" /><path d="M12 7v4m0 0-6 6m6-6 6 6" /></svg></span>
 							<p class="stat stat-title">Cross-Functional Orchestration &amp; Team Scaling</p>
 							<p class="flip-hint sub-copy">Flip for more</p>
 						</div>
@@ -93,6 +95,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 				<div class="flip" role="button" tabindex="0" aria-pressed="false">
 					<div class="flip-inner">
 						<div class="face front">
+							<span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m3 17 6-6 4 4 8-8" /><path d="M15 7h6v6" /></svg></span>
 							<p class="stat stat-title">Commercial Strategy &amp; Value Realization</p>
 							<p class="flip-hint sub-copy">Flip for more</p>
 						</div>
@@ -106,6 +109,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 				<div class="flip" role="button" tabindex="0" aria-pressed="false">
 					<div class="flip-inner">
 						<div class="face front">
+							<span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9" /><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z" /></svg></span>
 							<p class="stat stat-title">Foundational Craft &amp; Design Rigor</p>
 							<p class="flip-hint sub-copy">Flip for more</p>
 						</div>
@@ -119,6 +123,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 				<div class="flip" role="button" tabindex="0" aria-pressed="false">
 					<div class="flip-inner">
 						<div class="face front">
+							<span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7" /><path d="m21 21-4.3-4.3" /></svg></span>
 							<p class="stat stat-title">Rapid Research &amp; Continuous Validation</p>
 							<p class="flip-hint sub-copy">Flip for more</p>
 						</div>
@@ -215,11 +220,23 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 	/* Full container width so the headline and email share the header and footer's left edge;
 	   the line length is limited on the h1 instead of narrowing (and so re-centering) the container. */
 	.intro {
+		padding-top: calc(var(--space-section) * 0.75);
 		padding-bottom: var(--space-section);
 	}
 
+	/* Large all-caps tagline between the page title and the headline, in a fixed dark gray */
+	.tagline {
+		margin: 0 0 calc(var(--space-12) * 1.25 * 1.15);
+		font-size: var(--text-2xl);
+		font-weight: 700;
+		line-height: var(--leading-tight);
+		letter-spacing: var(--tracking-tight);
+		text-transform: uppercase;
+		color: #4a4a4a;
+	}
+
 	.intro h1 {
-		width: 90%;
+		width: 100%;
 		max-width: none;
 		margin-block: 0 var(--space-6);
 		font-size: 3rem;
@@ -229,6 +246,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 	   Sliding the gradient recolors the existing text left to right on hover and back on mouse-off.
 	   The sweep has a gentle ease-in-out, and --sweep (set per sentence by the script below) scales its duration to the sentence length so every sentence moves at the same speed. */
 	.line {
+		/* Every sentence rests in the same soft gray */
+		--rest: color-mix(in srgb, var(--color-text) 75%, var(--color-bg));
 		background-image: linear-gradient(to right, var(--color-primary) 50%, var(--rest) 50%);
 		background-size: 200% 100%;
 		background-position: 100% 0;
@@ -241,24 +260,6 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 	.line:hover {
 		background-position: 0 0;
-	}
-
-	/* Resting colors: the first sentence is full white, the others sit in a soft gray */
-	.lead {
-		--rest: var(--color-text);
-	}
-
-	.soft {
-		--rest: color-mix(in srgb, var(--color-text) 75%, var(--color-bg));
-	}
-
-	/* Final sentence rests at 65% opacity; hovering it brings it to full */
-	.last {
-		opacity: 0.65;
-	}
-
-	.last:hover {
-		opacity: 1;
 	}
 
 	/* While any sentence is hovered, dim the others */
@@ -291,7 +292,6 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 	.snapshot-card {
 		padding: var(--space-6);
 		background: var(--color-surface);
-		border: 1px solid var(--color-border);
 		border-radius: var(--radius);
 	}
 
@@ -299,7 +299,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 	   and glows softly, its large text sweeps to amber, and its link text gets the header-link treatment. */
 	.linked-cards .snapshot-card {
 		padding: 0;
-		transition: transform 0.2s ease-out, box-shadow 0.2s ease-out, border-color 0.2s ease-out;
+		transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
 	}
 
 	/* The link fills the whole card so the entire card is clickable; the image runs edge to edge and the text sits in .card-body */
@@ -331,16 +331,15 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 		padding-top: var(--space-4);
 	}
 
-	/* Edge to edge at the top of the card, with its top corners following the card's rounded corners (radius minus the 1px border) */
+	/* Edge to edge at the top of the card, with its top corners following the card's rounded corners */
 	.linked-cards .card-image {
 		flex: none;
-		border-radius: calc(var(--radius) - 1px) calc(var(--radius) - 1px) 0 0;
+		border-radius: var(--radius) var(--radius) 0 0;
 	}
 
 	.linked-cards .snapshot-card:is(:hover, :focus-within) {
 		transform: translateY(-8px);
-		border-color: color-mix(in srgb, var(--color-secondary) 40%, var(--color-border));
-		box-shadow: 0 0 24px color-mix(in srgb, var(--color-secondary) 18%, transparent);
+		box-shadow: 0 0 0 1px var(--color-secondary), 0 0 24px color-mix(in srgb, var(--color-secondary) 18%, transparent);
 	}
 
 	/* Card title: the same two-tone gradient sweep as the headline sentences. The text is painted amber on the left and white on the right,
@@ -528,11 +527,10 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 		grid-area: 1 / 1;
 		padding: var(--space-6);
 		background: var(--color-surface);
-		border: 1px solid var(--color-border);
 		border-radius: var(--radius);
 		-webkit-backface-visibility: hidden;
 		backface-visibility: hidden;
-		transition: box-shadow 0.2s ease-out, border-color 0.2s ease-out;
+		transition: box-shadow 0.2s ease-out;
 	}
 
 	.expertise .back {
@@ -541,24 +539,43 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 	/* Same soft purple glow as the passion cards, so the cards read as interactive */
 	.expertise .flip:is(:hover, :focus-visible) .face {
-		border-color: color-mix(in srgb, var(--color-secondary) 40%, var(--color-border));
-		box-shadow: 0 0 24px color-mix(in srgb, var(--color-secondary) 18%, transparent);
+		box-shadow: 0 0 0 1px var(--color-secondary), 0 0 24px color-mix(in srgb, var(--color-secondary) 18%, transparent);
 	}
 
 	.expertise .stat {
 		margin: 0;
 	}
 
-	/* The front face is a column so the hint can sit at the bottom left, however tall the card is */
-	.expertise .front {
+	/* Icon sits beside the title, centered on the title's first line, in the text color (white on the dark theme).
+	   It is as tall as one line of the title, and its svg is 1em of the title's font size. */
+	.expertise .icon {
 		display: flex;
-		flex-direction: column;
+		align-items: center;
+		height: calc(var(--text-xl) * var(--leading-snug));
+		margin-right: var(--space-3);
+		font-size: var(--text-xl);
+		color: var(--color-text);
 	}
 
-	/* Hint pinned to the bottom left of the card; the top padding keeps it clear of the title on short cards.
+	.expertise .icon svg {
+		width: 1em;
+		height: 1em;
+	}
+
+	/* The front face is a grid: icon and title side by side on the first row, with the hint on the row below so it
+	   can sit at the bottom left, however tall the card is */
+	.expertise .front {
+		display: grid;
+		grid-template-columns: auto 1fr;
+		grid-template-rows: auto 1fr;
+	}
+
+	/* Hint pinned to the bottom left of the card, spanning both columns; the top padding keeps it clear of the title on short cards.
 	   Type styling comes from .sub-copy. */
 	.expertise .flip-hint {
-		margin: auto 0 0;
+		grid-column: 1 / -1;
+		align-self: end;
+		margin: 0;
 		padding-top: var(--space-6);
 	}
 
