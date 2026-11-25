@@ -20,7 +20,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 				const root = document.documentElement;
 				h1.style.opacity = '0';
 				// Hides the first section below until the headline has finished (see .intro-anim in the styles)
-				root.classList.add('intro-anim');
+				root.classList.add('intro-anim', 'reveal-anim');
 				const run = () => {
 					const lines = [...h1.querySelectorAll('.line')];
 					const originals = lines.map((line) => [...line.childNodes].map((n) => n.cloneNode(true)));
@@ -73,11 +73,30 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 						);
 					};
 					const headingDelay = headlineEnd + GAP;
+					// Every section uses this same sequence: the heading, a pause, then the cards one after another
+					const revealSection = (section, delay) => {
+						const heading = section.querySelector('h2');
+						const cards = section.querySelectorAll('.snapshot-card');
+						if (heading) drop(heading, delay);
+						cards.forEach((card, i) => drop(card, delay + GAP + i * STAGGER));
+						section.classList.add('revealed');
+					};
+					let firstEnd = 0;
 					if (next) {
-						const heading = next.querySelector('h2');
-						if (heading) drop(heading, headingDelay);
-						next.querySelectorAll('.snapshot-card').forEach((card, i) => drop(card, headingDelay + GAP + i * STAGGER));
+						revealSection(next, headingDelay);
+						firstEnd = performance.now() + headingDelay + GAP + (next.querySelectorAll('.snapshot-card').length - 1) * STAGGER + DURATION;
 					}
+					// The sections below reveal the same way as they scroll into view (waiting for the first section if they are already visible)
+					const later = document.querySelectorAll('.intro + .snapshot ~ .snapshot');
+					const observer = new IntersectionObserver((entries) => {
+						for (const entry of entries) {
+							if (!entry.isIntersecting) continue;
+							observer.unobserve(entry.target);
+							const wait = firstEnd - performance.now();
+							revealSection(entry.target, wait > 0 ? wait + GAP : 0);
+						}
+					}, { rootMargin: '0px 0px -10% 0px' });
+					later.forEach((section) => observer.observe(section));
 					root.classList.remove('intro-anim');
 					setTimeout(() => lines.forEach((line, i) => {
 						line.replaceChildren(...originals[i]);
@@ -361,6 +380,11 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 	/* The first section below the headline is held back by the script after the h1, which animates it in and then removes this class */
 	:global(.intro-anim) .intro + .snapshot :is(h2, .snapshot-card) {
+		opacity: 0;
+	}
+
+	/* The sections further down stay hidden until the script reveals them as they scroll into view */
+	:global(.reveal-anim) .intro + .snapshot ~ .snapshot:not(.revealed) :is(h2, .snapshot-card) {
 		opacity: 0;
 	}
 
