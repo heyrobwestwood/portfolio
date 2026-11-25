@@ -5,8 +5,88 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 <BaseLayout>
 	<section class="intro container" id="about">
-		<p class="tagline">Design for impact</p>
+		<p class="tagline"><span class="tagline-text"><span class="tagline-word" style="--w:0">Design</span> <span class="tagline-word" style="--w:1">for</span> <span class="tagline-word tagline-accent" style="--w:2">impact</span></span></p>
 		<h1><span class="line">I am an Experience Design Architect, AI builder, and team leader. </span><span class="line">I transform complex systems into intuitive, human-centered experiences. </span><span class="line">My focus is to scale and mentor high-velocity teams that ship the right work.</span></h1>
+		<!-- Headline reveal: runs right after the h1 so it is hidden before first paint, then each wrapped line drops in and fades in one after another.
+		     Words are wrapped temporarily so each one's line can be measured (same idea as the subpages in BaseLayout), then the original markup is restored. -->
+		<script is:inline>
+			(() => {
+				const h1 = document.currentScript.previousElementSibling;
+				if (!h1 || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+				const START = 900 + 300; // the tagline (two 150ms word staggers + a 600ms fade), plus a 300ms pause before the headline starts
+				const STAGGER = 80;
+				const DURATION = 600; // long enough that the fade reads as a fade
+				const GAP = 300; // pause after the headline, and again after the next heading
+				const root = document.documentElement;
+				h1.style.opacity = '0';
+				// Hides the first section below until the headline has finished (see .intro-anim in the styles)
+				root.classList.add('intro-anim');
+				const run = () => {
+					const lines = [...h1.querySelectorAll('.line')];
+					const originals = lines.map((line) => [...line.childNodes].map((n) => n.cloneNode(true)));
+					const words = [];
+					for (const line of lines) {
+						const text = line.firstChild;
+						const fragment = document.createDocumentFragment();
+						for (const part of text.data.split(/(\s+)/)) {
+							if (!part) continue;
+							if (!part.trim()) {
+								fragment.append(part);
+								continue;
+							}
+							const word = document.createElement('span');
+							word.textContent = part;
+							// The sentence's text is painted by its own background gradient (transparent fill), which a child's
+							// opacity can't affect. So for the reveal each word paints itself in the resting color instead.
+							word.style.webkitTextFillColor = 'var(--rest)';
+							fragment.append(word);
+							words.push(word);
+						}
+						line.style.backgroundImage = 'none';
+						line.replaceChildren(fragment);
+					}
+					// Number the visual lines by each word's position, top to bottom
+					let row = -1;
+					let rowTop = -Infinity;
+					const timings = words.map((word) => {
+						const top = word.getBoundingClientRect().top;
+						if (top - rowTop > 4) {
+							row++;
+							rowTop = top;
+						}
+						return row;
+					});
+					h1.style.opacity = '';
+					words.forEach((word, i) => {
+						word.animate(
+							[{ opacity: 0 }, { opacity: 1 }],
+							{ duration: DURATION, delay: START + timings[i] * STAGGER, easing: 'ease-out', fill: 'backwards' },
+						);
+					});
+					// Then the first section: its heading after a pause, and its cards after another
+					const headlineEnd = START + row * STAGGER + DURATION;
+					const next = document.querySelector('.intro + .snapshot');
+					const drop = (el, delay) => {
+						el.animate(
+							[{ opacity: 0, transform: 'translateY(-1.25rem)' }, { opacity: 1, transform: 'none' }],
+							{ duration: DURATION, delay, easing: 'ease-out', fill: 'backwards' },
+						);
+					};
+					const headingDelay = headlineEnd + GAP;
+					if (next) {
+						const heading = next.querySelector('h2');
+						if (heading) drop(heading, headingDelay);
+						next.querySelectorAll('.snapshot-card').forEach((card, i) => drop(card, headingDelay + GAP + i * STAGGER));
+					}
+					root.classList.remove('intro-anim');
+					setTimeout(() => lines.forEach((line, i) => {
+						line.replaceChildren(...originals[i]);
+						line.style.backgroundImage = '';
+					}), START + row * STAGGER + DURATION + 100);
+				};
+				document.fonts.ready.then(run);
+			})();
+		</script>
 	</section>
 	<section class="snapshot container" aria-labelledby="passions-title">
 		<h2 id="passions-title">What I'm Most Passionate About</h2>
@@ -216,6 +296,22 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 	</section>
 </BaseLayout>
 
+<script>
+	// Scale the tagline's font size so its text exactly fills the content width.
+	const tagline = document.querySelector<HTMLElement>('.tagline');
+	const text = tagline?.querySelector<HTMLElement>('.tagline-text');
+	function fitTagline() {
+		if (!tagline || !text) return;
+		tagline.style.fontSize = '100px';
+		const available = tagline.clientWidth;
+		const natural = text.getBoundingClientRect().width;
+		if (available && natural) tagline.style.fontSize = `${(100 * available) / natural}px`;
+	}
+	fitTagline();
+	document.fonts?.ready.then(fitTagline);
+	window.addEventListener('resize', fitTagline);
+</script>
+
 <style>
 	/* Full container width so the headline and email share the header and footer's left edge;
 	   the line length is limited on the h1 instead of narrowing (and so re-centering) the container. */
@@ -227,12 +323,60 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 	/* Large all-caps tagline between the page title and the headline, in a fixed dark gray */
 	.tagline {
 		margin: 0 0 calc(var(--space-12) * 1.25 * 1.15);
-		font-size: var(--text-2xl);
+		/* Sized by the script below so the text spans the full content width; this is the fallback */
+		font-size: 9.5cqw;
 		font-weight: 700;
 		line-height: var(--leading-tight);
 		letter-spacing: var(--tracking-tight);
 		text-transform: uppercase;
-		color: #4a4a4a;
+		white-space: nowrap;
+		color: #1a1a1a;
+	}
+
+	/* Dark mode: light gray, shared with the headline lines below */
+	:global(:root[data-theme='dark']) .tagline {
+		color: #c8c8c8;
+	}
+
+	.tagline-text {
+		display: inline-block;
+	}
+
+	/* On load, the elements in view drop in from above while fading in, one after another.
+	   --i is each element's place in the order; the delay is --i times the stagger. */
+	@keyframes drop-in {
+		from {
+			opacity: 0;
+			transform: translateY(-1.25rem);
+		}
+	}
+
+	/* The headline's lines are animated by the script after the h1, between the tagline and this heading */
+	/* Each word of the tagline drops in a beat after the one before (keep 150ms in sync with START in the script after the h1) */
+	.tagline-word {
+		display: inline-block;
+		animation: drop-in 600ms ease-out backwards;
+		animation-delay: calc(var(--w) * 150ms);
+	}
+
+	/* The first section below the headline is held back by the script after the h1, which animates it in and then removes this class */
+	:global(.intro-anim) .intro + .snapshot :is(h2, .snapshot-card) {
+		opacity: 0;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.tagline-word {
+			animation: none;
+		}
+	}
+
+	/* "Impact" uses the same orange as the hover sweep */
+	.tagline-accent {
+		color: var(--color-primary);
+	}
+
+	.intro {
+		container-type: inline-size;
 	}
 
 	.intro h1 {
@@ -256,6 +400,16 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 		-webkit-text-fill-color: transparent;
 		color: transparent;
 		transition: background-position var(--sweep, 0.4s) cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
+	}
+
+	/* Light mode: rest in the same dark gray as the tagline */
+	:global(:root:not([data-theme='dark'])) .line {
+		--rest: #1a1a1a;
+	}
+
+	/* Dark mode: rest in the same light gray as the tagline */
+	:global(:root[data-theme='dark']) .line {
+		--rest: #c8c8c8;
 	}
 
 	.line:hover {
