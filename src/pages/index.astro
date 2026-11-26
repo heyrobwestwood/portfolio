@@ -708,11 +708,36 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 		border-radius: var(--radius);
 		-webkit-backface-visibility: hidden;
 		backface-visibility: hidden;
-		transition: box-shadow 0.2s ease-out;
+		/* Lift each face 1px off the shared plane so the two never z-fight (and flicker out) mid-turn */
+		transform: translateZ(1px);
+		transition: box-shadow 0.2s ease-out, background-color 0.2s ease-out;
 	}
 
+	/* Hovering an unflipped card tints its front face 5% toward the secondary color */
+	.expertise .flip:not(.is-flipped):hover .front {
+		background: color-mix(in srgb, var(--color-surface), var(--color-secondary) 5%);
+	}
+
+	/* Hovering a card that hasn't been flipped tilts it part of the way over, as a hint that it turns */
+	@media (hover: hover) {
+		.expertise .flip:not(.is-flipped):hover .flip-inner {
+			transform: rotateY(10deg);
+			transition-duration: 0.2s;
+		}
+	}
+
+	/* Back face: secondary color with very dark purple copy */
 	.expertise .back {
-		transform: rotateY(180deg);
+		transform: rotateY(180deg) translateZ(1px);
+		background: var(--color-secondary);
+	}
+
+	/* Same type as the copy text on the other pages */
+	.expertise .back .label {
+		font-size: 1.125rem;
+		font-weight: 300;
+		line-height: var(--leading-normal);
+		color: #1e0f3d;
 	}
 
 	/* Same soft purple glow as the passion cards, so the cards read as interactive */
